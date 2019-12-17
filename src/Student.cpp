@@ -6,7 +6,7 @@
 	Project 2
 */
 
-#include "Student.h"
+#include "include/Student.h"
 
 using namespace std;
 

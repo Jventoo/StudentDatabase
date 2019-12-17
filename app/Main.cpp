@@ -6,10 +6,10 @@
 	Project 2
 */
 
-#include "InputHandler.h"
-#include "CourseList.h"
-#include "StudentList.h"
-#include "ExceptionHandler.h"
+#include "include/InputHandler.h"
+#include "include/CourseList.h"
+#include "include/StudentList.h"
+#include "include/ExceptionHandler.h"
 
 #include <algorithm> 
 

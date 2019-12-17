@@ -6,7 +6,7 @@
 	Project 2
 */
 
-#include "CourseList.h"
+#include "include/CourseList.h"
 
 using namespace std;
 
