@@ -6,7 +6,7 @@ Student Database is a C++ console application focused on allowing college counse
 
 Courses in resources/courses.txt follow the following syntax: NAME PREFIX COURSE-NUM UNITS
 
-Example: Chemistry CHM 348 4
+**Example:** ```Chemistry CHM 348 4```
 
 Student entries in resources/student.txt are separated by an empty line and following the following syntax:
 
@@ -19,8 +19,9 @@ COURSE2
 ...COURSEN
 
 
-Example: 
+**Example:**
 
+```
 Bruce Wayne 123456 Y 5
 
 Chemistry CHM 348 4 B
@@ -33,7 +34,6 @@ English ENG 101 3 A
 
 History HIS 101 3 A
 
-
 \n
 
 Steven Rogers 789456 Y 3
@@ -43,7 +43,7 @@ Chemistry CHM 348 4 A
 ComputerScie CSC 201 4 B
 
 History HIS 101 3 A
-
+```
 
 
 **Both files are terminated by the "END" flag**
