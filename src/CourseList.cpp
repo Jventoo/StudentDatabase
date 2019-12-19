@@ -10,40 +10,28 @@
 
 using namespace std;
 
-const int CourseList::CAP = 10;
-
 // CourseList
 CourseList::CourseList()
 {
-	courseList.reserve(CAP);
+	courseList = new list<Course>;
 }
-
-// Overloaded constructor
-CourseList::CourseList(int newCapacity)
-{
-	courseList.reserve(newCapacity);
-}
-
 
 // Copy constructor
 CourseList::CourseList(const CourseList& rhs)
 {
-	courseList = rhs.courseList;
+	*courseList = *rhs.courseList;
 }
 
 // addCourse
 void CourseList::addCourse(const Course& newCourse)
 {
-	if (courseList.size() == courseList.capacity())
-		courseList.reserve(courseList.capacity() * 2);
-
-	courseList.push_back(newCourse);
+	courseList->push_back(newCourse);
 }
 
 // getCourseUnits
 double CourseList::getCourseUnits(const string& pref, int num) const
 {
-	for (auto i : courseList)
+	for (const auto& i : *courseList)
 	{
 		if (i.getCoursePrefix() == pref && i.getCourseNo() == num)
 			return i.getCourseUnits();
@@ -55,7 +43,7 @@ double CourseList::getCourseUnits(const string& pref, int num) const
 // searchCourse
 bool CourseList::searchCourse(const string& pref, int num) const
 {
-	for (auto i : courseList)
+	for (const auto& i : *courseList)
 	{
 		if (i.getCoursePrefix() == pref && i.getCourseNo() == num)
 			return true;
@@ -64,12 +52,23 @@ bool CourseList::searchCourse(const string& pref, int num) const
 	return false;
 }
 
+void CourseList::printCoursesByDept(const string& pref, int num) const
+{
+
+}
+
+void CourseList::printAllCourses() const
+{
+
+}
+
+
 // overloaded operator=
 CourseList& CourseList::operator=(const CourseList& rhs)
 {
 	if (this != &rhs)
 	{
-		courseList = rhs.courseList;
+		*courseList = *rhs.courseList;
 	}
 	else
 		cerr << "Cannot self assign";
@@ -77,7 +76,14 @@ CourseList& CourseList::operator=(const CourseList& rhs)
 	return *this;
 }
 
+void CourseList::destroyCourseList()
+{
+	courseList->clear();
+}
+
 // destructor
 CourseList::~CourseList()
 {
+	delete courseList;
+	courseList = nullptr;
 }

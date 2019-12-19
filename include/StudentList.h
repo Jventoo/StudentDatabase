@@ -13,54 +13,56 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 #include <algorithm>
 
 class StudentList
 {
+
+public:
+	StudentList();
+
+	StudentList(int newCap);
+
 	StudentList(const StudentList&);
 
 	StudentList& operator=(const StudentList&);
 
-public:
-	// default constructor
-	StudentList();
-
-	// addStudent
+	// Add student to end of studentList
 	void addStudent(const Student& newStudent);
 
-	// getNoOfStudents
+	// Return number of students
 	int getNoOfStudents() const;
 
-	// printStudentByID
+	// Print full information of student with matching ID
 	void printStudentByID(int ID) const;
 
-	// printStudentsByCourse
+	// Print full information of all students who have/are taking a current course
 	void printStudentsByCourse(const std::string& pref, int num) const;
 
-	// printStudentByName
-	void printStudentByName(const std::string& lastName) const;
+	// Print the ID numbers of all students with matching last name
+	void printStudentsByName(const std::string& lastName) const;
 
-	// printStudentsOnHold
+	// Print full information of all students who haven't paid tuition
 	void printStudentsOnHold() const;
 
-	// printAllStudents
+	// Print full information of all students
 	void printAllStudents() const;
 
-	// printStudentsByGPA
+	// Print full information of all students within an inclusive GPA range
 	void printStudentsByGPA(double lowerBound, double upperBound) const;
 
-	// printStudentsByUnits
+	// Print full information of all students within an inclusive unit range
 	void printStudentsByUnits(int lowerBound, int upperBound) const;
-
-	// destroyStudentList
-	void destroyStudentList();
 
 	// destructor
 	~StudentList();
 
 private:
-	std::list<Student>* studentList;
+	std::vector<Student> studentList;
+
+	// Amount to increase vector when at capacity
+	static const int CAP;
 };
 
 #endif

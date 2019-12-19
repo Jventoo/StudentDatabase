@@ -10,24 +10,29 @@
 
 using namespace std;
 
+const int StudentList::CAP = 30;
+
 // default constructor
 StudentList::StudentList()
 {
-	studentList = new list<Student>;
+	studentList.reserve(CAP);
 }
 
-StudentList::StudentList(const StudentList& otherList)
+StudentList::StudentList(int newCap)
 {
-	studentList = new list<Student>;
-
-	*studentList = *otherList.studentList;
+	studentList.reserve(newCap);
 }
 
-StudentList& StudentList::operator=(const StudentList& otherList)
+StudentList::StudentList(const StudentList& otherVect)
 {
-	if (this != &otherList)
+	studentList = otherVect.studentList;
+}
+
+StudentList& StudentList::operator=(const StudentList& otherVect)
+{
+	if (this != &otherVect)
 	{
-		*studentList = *otherList.studentList;
+		studentList = otherVect.studentList;
 	}
 	else
 		cerr << "Cannot self assign!";
@@ -38,13 +43,16 @@ StudentList& StudentList::operator=(const StudentList& otherList)
 // addStudent
 void StudentList::addStudent(const Student& newStudent)
 {
-	studentList->push_back(newStudent);
+	if (studentList.size() == studentList.capacity())
+		studentList.resize(studentList.size() + CAP);
+
+	studentList.push_back(newStudent);
 }
 
 // getNoOfStudents
 int StudentList::getNoOfStudents() const
 {
-	return static_cast<int>(studentList->size());
+	return static_cast<int>(studentList.size());
 }
 
 // printStudentByID
@@ -53,8 +61,8 @@ void StudentList::printStudentByID(int ID) const
 	if (getNoOfStudents())
 	{
 		bool found = false;
-		auto search = studentList->cbegin();
-		auto end = studentList->cend();
+		auto search = studentList.cbegin(),
+			end = studentList.cend();
 
 		while (search != end && !found)
 		{
@@ -82,7 +90,7 @@ void StudentList::printStudentsByCourse(const string& pref, int num) const
 {
 	if (getNoOfStudents())
 	{
-		for (auto const &iter : *studentList)
+		for (auto const &iter : studentList)
 		{
 			if (iter.getNumberOfCourses())
 			{
@@ -96,12 +104,12 @@ void StudentList::printStudentsByCourse(const string& pref, int num) const
 }
 
 // printStudentByName
-void StudentList::printStudentByName(const string& lastName) const
+void StudentList::printStudentsByName(const string& lastName) const
 {
 	if (getNoOfStudents())
 	{
 		bool found = false;
-		for (auto const& iter : *studentList)
+		for (auto const& iter : studentList)
 		{
 			if (iter.getLastName() == lastName)
 			{
@@ -126,7 +134,7 @@ void StudentList::printStudentsOnHold() const
 	if (getNoOfStudents())
 	{
 		bool found = false;
-		for (auto const& iter : *studentList)
+		for (auto const& iter : studentList)
 		{
 			if (!iter.isTuitionPaid())
 			{
@@ -147,7 +155,7 @@ void StudentList::printAllStudents() const
 {
 	if (getNoOfStudents())
 	{
-		for (auto const& iter : *studentList)
+		for (auto const& iter : studentList)
 			iter.printStudentInfo();
 	}
 	else
@@ -160,20 +168,16 @@ void StudentList::printStudentsByGPA(double lowerBound,
 	if (getNoOfStudents())
 	{
 		bool found = false;
-		auto search = studentList->cbegin(),
-			end = studentList->cend();
 
-		while (search != end)
+		for (const auto& search : studentList)
 		{
-			double GPA = search->getGpa();
+			double GPA = search.getGpa();
 			if (GPA >= lowerBound && GPA <= upperBound
-				&& search->isTuitionPaid())
+				&& search.isTuitionPaid())
 			{
 				found = true;
-				search->printStudentInfo();
+				search.printStudentInfo();
 			}
-
-			++search;
 		}
 
 		if (!found)
@@ -192,21 +196,17 @@ void StudentList::printStudentsByUnits(int lowerBound,
 	if (getNoOfStudents())
 	{
 		bool found = false;
-		auto search = studentList->cbegin(), 
-			end = studentList->cend();
 		double lower = static_cast<double>(lowerBound), 
 			upper = static_cast<double>(upperBound);
 
-		while (search != end)
+		for (const auto& search : studentList)
 		{
-			double units = search->getUnitsCompleted();
+			double units = search.getUnitsCompleted();
 			if (units >= lower && units <= upper)
 			{
 				found = true;
-				search->printStudentInfo();
+				search.printStudentInfo();
 			}
-
-			++search;
 		}
 
 		if (!found)
@@ -218,15 +218,7 @@ void StudentList::printStudentsByUnits(int lowerBound,
 		cerr << "List is empty.";
 }
 
-// destroyStudentList
-void StudentList::destroyStudentList()
-{
-	studentList->clear();
-}
-
 // destructor
 StudentList::~StudentList()
 {
-	delete studentList;
-	studentList = nullptr;
 }

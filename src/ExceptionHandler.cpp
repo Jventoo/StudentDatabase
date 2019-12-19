@@ -11,18 +11,18 @@
 
 using namespace std;
 
+extern const int NUMBER_OF_CHOICES;
 int ExceptionHandler::validateSelection(const string& input) const
 {
-	if (input.length() > 1)
+	int temp = 0;
+	auto stream = istringstream(input);
+
+	stream >> temp;
+
+	if (stream.fail() || !stream.eof() || temp < 1 || temp > NUMBER_OF_CHOICES)
 		return 0;
 	else
-	{
-		int id = input[0] - 48;
-		if (id >= 1 && id <= 8)
-			return id;
-		else
-			return 0;
-	}
+		return temp;
 }
 
 bool ExceptionHandler::lastNameValid(string& input) const
@@ -39,20 +39,21 @@ bool ExceptionHandler::lastNameValid(string& input) const
 }
 
 bool ExceptionHandler::validateID
-	(const string& input, int& id) const
+(const string& input, int& id) const
 {
-	auto iter = input.begin();
-	while (iter != input.end() && isdigit(*iter))
-		++iter;
-	
-	if (input.length() < 6 || input.length() > 6
-		|| iter != input.end())
+	int temp = 0;
+	auto stream = istringstream(input);
+
+	stream >> temp;
+
+	if (stream.fail() || !stream.eof()
+		|| input.length() < 6 || input.length() > 6)
 	{
 		cout << "Invalid input. ID is 6 digits. Try again." << endl;
 		return false;
 	}
 
-	id = stoi(input);
+	id = temp;
 	return true;
 }
 
@@ -126,18 +127,19 @@ bool ExceptionHandler::validateGPA(const string& input,
 bool ExceptionHandler::validateUnits(const string& input,
 	int& studentUnits) const
 {
-	auto iter = input.begin();
-	while (iter != input.end() && isdigit(*iter))
-		++iter;
+	int temp = 0;
+	auto stream = istringstream(input);
+
+	stream >> temp;
 
 	if (input.length() < 1 || input.length() > 3
-		|| iter != input.end())
+		|| stream.fail() || !stream.eof())
 	{
 		cout << "Invalid input. Units supplied must be between 0 and 999." 
 			<< " Try again." << endl;
 		return false;
 	}
 
-	studentUnits = stoi(input);
+	studentUnits = temp;
 	return true;
 }
