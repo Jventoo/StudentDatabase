@@ -7,6 +7,7 @@
 */
 
 #include "StudentList.h"
+#include "CourseCatalog.h"
 #include "CourseList.h"
 #include "Course.h"
 #include "Student.h"
@@ -22,7 +23,7 @@ using namespace std;
 const char COURSE_DATA[] = "resources/courses.txt";
 const char STUDENT_DATA[] = "resources/students.txt";
 
-void createCourseList(ifstream& infileCourses, CourseList& courseList)
+void createCourseCatalog(ifstream& infileCourses, CourseCatalog& courseCatalog)
 {
 	string courseName, coursePrefix;
 	int courseNo = 0;
@@ -37,13 +38,13 @@ void createCourseList(ifstream& infileCourses, CourseList& courseList)
 
 		tempCourse.setCourseInfo(courseName, coursePrefix, 
 			courseNo, courseUnits);
-		courseList.addCourse(tempCourse);
+		courseCatalog.addCourse(tempCourse);
 
 		infileCourses >> courseName;
 	}
 }
 void createStudentList(ifstream& infileStudents, 
-	StudentList& studentList, CourseList& courseList)
+	StudentList& studentList, CourseCatalog& courseCatalog)
 {
 	string fName, lName, courseName, coursePrefix;
 	int id = 0,
@@ -86,7 +87,7 @@ void createStudentList(ifstream& infileStudents,
 	}
 }
 
-void readData(CourseList& courseList, StudentList& studentList)
+void readData(CourseCatalog& courseCatalog, StudentList& studentList)
 {
 	ifstream infileCourses;
 	infileCourses.open(COURSE_DATA);
@@ -97,7 +98,7 @@ void readData(CourseList& courseList, StudentList& studentList)
 		exit(1);
 	}
 
-	createCourseList(infileCourses, courseList);
+	createCourseCatalog(infileCourses, courseCatalog);
 	infileCourses.close();
 
 	ifstream infileStudents;
@@ -109,6 +110,6 @@ void readData(CourseList& courseList, StudentList& studentList)
 		exit(1);
 	}
 
-	createStudentList(infileStudents, studentList, courseList);
+	createStudentList(infileStudents, studentList, courseCatalog);
 	infileStudents.close();
 }

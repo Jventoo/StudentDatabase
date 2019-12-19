@@ -7,7 +7,7 @@
 */
 
 #include "include/InputHandler.h"
-#include "include/CourseList.h"
+#include "include/CourseCatalog.h"
 #include "include/StudentList.h"
 #include "include/ExceptionHandler.h"
 
@@ -21,7 +21,7 @@ using namespace std;
 
 void displayMenu();
 void processChoice(const StudentList& studentList,
-	const CourseList& courseList);
+	const CourseCatalog& courseList);
 
 extern const int NUMBER_OF_CHOICES = 10;
 const int PRECISION = 2;
@@ -29,12 +29,12 @@ const int PRECISION = 2;
 int main()
 {
 	system("Color 30");
-	CourseList courseList;
+	CourseCatalog courseCatalog;
 	StudentList studentList;
 
-	readData(courseList, studentList);
+	readData(courseCatalog, studentList);
 	displayMenu();
-	processChoice(studentList, courseList);
+	processChoice(studentList, courseCatalog);
 
 	//cout << endl;
 	system("Pause");
@@ -55,7 +55,7 @@ void displayMenu()
 	cout << "    6: Print students by GPA" << endl;
 	cout << "    7: Print students by unit hours" << endl;
 
-	cout << "\n\t** COURSE MENU **\n";
+	cout << "\n\n\t** COURSE MENU **\n";
 
 	cout << "    8: Print courses by department" << endl;
 	cout << "    9: Print all courses" << endl;
@@ -64,7 +64,7 @@ void displayMenu()
 }
 
 void processChoice(const StudentList& studentList,
-	const CourseList& courseList)
+	const CourseCatalog& courseCatalog)
 {
 	// Initialize all variables
 	int id = 0, courseNo = 0, lowerUnits = 0, upperUnits = 0;
@@ -142,7 +142,7 @@ void processChoice(const StudentList& studentList,
 
 			if(exception.validateCourseNo(inputCourseNo, courseNo) && valid)
 			{				
-				if (!courseList.searchCourse(coursePrefix, courseNo))
+				if (!courseCatalog.searchCourse(coursePrefix, courseNo))
 					cout << "This course is not in the catalog." << endl;
 				else
 					studentList.printStudentsByCourse(coursePrefix, courseNo);
@@ -199,6 +199,30 @@ void processChoice(const StudentList& studentList,
 			{
 				studentList.printStudentsByUnits(lowerUnits, upperUnits);
 			}
+			cout << endl;
+
+			break;
+
+
+			// Print courses by department
+		case 8:
+			cout << "  => Please enter the course prefix (CSC, HIS, etc.): ";
+			getline(cin, coursePrefix);
+
+			cout << endl;
+
+			valid = exception.validateCoursePrefix(coursePrefix);
+			if (valid)
+				courseCatalog.printCoursesByDept(coursePrefix);
+			else
+				cout << "Invalid department." << endl;
+
+			break;
+
+
+			// Print all courses
+		case 9:
+			courseCatalog.printAllCourses();
 			cout << endl;
 
 			break;

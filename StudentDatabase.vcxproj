@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="app\Main.cpp" />
     <ClCompile Include="src\Course.cpp" />
+    <ClCompile Include="src\CourseCatalog.cpp" />
     <ClCompile Include="src\CourseList.cpp" />
     <ClCompile Include="src\ExceptionHandler.cpp" />
     <ClCompile Include="src\Person.cpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Course.h" />
+    <ClInclude Include="include\CourseCatalog.h" />
     <ClInclude Include="include\CourseList.h" />
     <ClInclude Include="include\ExceptionHandler.h" />
     <ClInclude Include="include\InputHandler.h" />

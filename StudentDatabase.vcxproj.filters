@@ -42,6 +42,9 @@
     <ClCompile Include="app\Main.cpp">
       <Filter>app</Filter>
     </ClCompile>
+    <ClCompile Include="src\CourseCatalog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Course.h">
@@ -63,6 +66,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\StudentList.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CourseCatalog.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

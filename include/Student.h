@@ -23,44 +23,29 @@
 class Student: public Person
 {
 public:
-	// default constructor
 	Student();
 
-	// setStudentInfo
 	void setStudentInfo(const std::string& newFirst, 
 		const std::string& newLast, int newID, bool newPaid, 
 		const std::multimap<Course, char>& newCompleted);
 
-
-	// getID
 	int getID() const;
 
-	// getNumberOfCourses
 	int getNumberOfCourses() const;
 
-	// getUnitsCompleted
 	double getUnitsCompleted() const;
 
-	// getGpa
 	double getGpa() const;
 
-
-	// isTuitionPaid
 	bool isTuitionPaid() const;
 
-	// courseIsCompleted
 	bool courseIsCompleted(const std::string& coursePref, 
 		int courseNo) const;
 
-
-	// printStudent
 	void printStudent() const;
 
-	// printStudentInfo
 	void printStudentInfo() const;
 
-
-	// destructor
 	~Student();
 
 private:

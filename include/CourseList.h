@@ -10,39 +10,38 @@
 #define COURSELIST_H
 
 #include "Course.h"
-
-#include <list>
+#include <vector>
 
 class CourseList
 {
 public:
-	// CourseList
 	CourseList();
 
-	// Copy constructor
+	CourseList(const std::string& pref);
+
 	CourseList(const CourseList& otherList);
-
-	void addCourse(const Course& newCourse);
-
-	double getCourseUnits(const std::string& pref, int num) const;
-
-	// See if there is a course in the list with the given prefix and number
-	bool searchCourse(const std::string& pref, int num) const;
-
-	void printCoursesByDept(const std::string& pref, int num) const;
-
-	void printAllCourses() const;
 
 	CourseList& operator=(const CourseList& rhs);
 
-	// Remove all nodes (courses)
-	void destroyCourseList();
+	void setListPrefix(const std::string& pref);
 
-	// destructor
+	void addCourse(const Course& newCourse);
+
+	void printCourses() const;
+
+	std::string getListPrefix() const { return coursePref; }
+
+	std::vector<Course> getCourseList() const { return courseList; }
+
+	double getCourseUnits(const std::string& pref, int num) const;
+
 	~CourseList();
 
 private:
-	std::list<Course>* courseList;	
+	std::vector<Course> courseList;	
+	std::string coursePref;
+
+	static const int CAP;
 };
 
 #endif

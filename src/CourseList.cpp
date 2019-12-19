@@ -10,28 +10,63 @@
 
 using namespace std;
 
-// CourseList
+const int CourseList::CAP = 10;
+
 CourseList::CourseList()
 {
-	courseList = new list<Course>;
+	courseList.reserve(CAP);
 }
 
-// Copy constructor
+CourseList::CourseList(const std::string& pref)
+{
+	courseList.reserve(CAP);
+	coursePref = pref;
+}
+
 CourseList::CourseList(const CourseList& rhs)
 {
-	*courseList = *rhs.courseList;
+	courseList = rhs.courseList;
 }
 
-// addCourse
+CourseList& CourseList::operator=(const CourseList& rhs)
+{
+	if (this != &rhs)
+	{
+		courseList = rhs.courseList;
+	}
+	else
+		cerr << "Cannot self assign";
+
+	return *this;
+}
+
+void CourseList::setListPrefix(const std::string& pref)
+{
+	coursePref = pref;
+}
+
 void CourseList::addCourse(const Course& newCourse)
 {
-	courseList->push_back(newCourse);
+	if (courseList.size() == courseList.capacity())
+		courseList.reserve(courseList.size() + CAP);
+
+	courseList.push_back(newCourse);
 }
 
-// getCourseUnits
+void CourseList::printCourses() const
+{
+	for (const auto& i : courseList)
+	{
+		cout << "     ";
+		i.printCourseInfo();
+		cout << endl;
+	}
+	cout << endl;
+}
+
 double CourseList::getCourseUnits(const string& pref, int num) const
 {
-	for (const auto& i : *courseList)
+	for (const auto& i : courseList)
 	{
 		if (i.getCoursePrefix() == pref && i.getCourseNo() == num)
 			return i.getCourseUnits();
@@ -40,50 +75,6 @@ double CourseList::getCourseUnits(const string& pref, int num) const
 	return -1;
 }
 
-// searchCourse
-bool CourseList::searchCourse(const string& pref, int num) const
-{
-	for (const auto& i : *courseList)
-	{
-		if (i.getCoursePrefix() == pref && i.getCourseNo() == num)
-			return true;
-	}
-
-	return false;
-}
-
-void CourseList::printCoursesByDept(const string& pref, int num) const
-{
-
-}
-
-void CourseList::printAllCourses() const
-{
-
-}
-
-
-// overloaded operator=
-CourseList& CourseList::operator=(const CourseList& rhs)
-{
-	if (this != &rhs)
-	{
-		*courseList = *rhs.courseList;
-	}
-	else
-		cerr << "Cannot self assign";
-
-	return *this;
-}
-
-void CourseList::destroyCourseList()
-{
-	courseList->clear();
-}
-
-// destructor
 CourseList::~CourseList()
 {
-	delete courseList;
-	courseList = nullptr;
 }
